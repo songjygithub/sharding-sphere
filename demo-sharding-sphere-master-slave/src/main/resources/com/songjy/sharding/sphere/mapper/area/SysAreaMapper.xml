@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.songjy.sharding.sphere.mapper.area.SysAreaMapper">
+  <resultMap id="BaseResultMap" type="com.songjy.sharding.sphere.model.area.SysArea">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="area_code" jdbcType="INTEGER" property="areaCode" />
+    <result column="area_name" jdbcType="VARCHAR" property="areaName" />
+    <result column="level" jdbcType="INTEGER" property="level" />
+    <result column="city_code" jdbcType="VARCHAR" property="cityCode" />
+    <result column="center" jdbcType="VARCHAR" property="center" />
+    <result column="parent_id" jdbcType="VARCHAR" property="parentId" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="creater_id" jdbcType="INTEGER" property="createrId" />
+    <result column="modifier_id" jdbcType="INTEGER" property="modifierId" />
+    <result column="gmt_created" jdbcType="TIMESTAMP" property="gmtCreated" />
+    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+    <result column="deleted" jdbcType="BIT" property="deleted" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, area_code, area_name, `level`, city_code, center, parent_id, remark, creater_id, 
+    modifier_id, gmt_created, gmt_modified, deleted
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_area
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sys_area
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.songjy.sharding.sphere.model.area.SysArea">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into sys_area (area_code, area_name, `level`, 
+      city_code, center, parent_id, 
+      remark, creater_id, modifier_id, 
+      gmt_created, gmt_modified, deleted
+      )
+    values (#{areaCode,jdbcType=INTEGER}, #{areaName,jdbcType=VARCHAR}, #{level,jdbcType=INTEGER}, 
+      #{cityCode,jdbcType=VARCHAR}, #{center,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{createrId,jdbcType=INTEGER}, #{modifierId,jdbcType=INTEGER}, 
+      #{gmtCreated,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.songjy.sharding.sphere.model.area.SysArea">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into sys_area
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="areaCode != null">
+        area_code,
+      </if>
+      <if test="areaName != null">
+        area_name,
+      </if>
+      <if test="level != null">
+        `level`,
+      </if>
+      <if test="cityCode != null">
+        city_code,
+      </if>
+      <if test="center != null">
+        center,
+      </if>
+      <if test="parentId != null">
+        parent_id,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="createrId != null">
+        creater_id,
+      </if>
+      <if test="modifierId != null">
+        modifier_id,
+      </if>
+      <if test="gmtCreated != null">
+        gmt_created,
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified,
+      </if>
+      <if test="deleted != null">
+        deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="areaCode != null">
+        #{areaCode,jdbcType=INTEGER},
+      </if>
+      <if test="areaName != null">
+        #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null">
+        #{level,jdbcType=INTEGER},
+      </if>
+      <if test="cityCode != null">
+        #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="center != null">
+        #{center,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createrId != null">
+        #{createrId,jdbcType=INTEGER},
+      </if>
+      <if test="modifierId != null">
+        #{modifierId,jdbcType=INTEGER},
+      </if>
+      <if test="gmtCreated != null">
+        #{gmtCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleted != null">
+        #{deleted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.songjy.sharding.sphere.model.area.SysArea">
+    update sys_area
+    <set>
+      <if test="areaCode != null">
+        area_code = #{areaCode,jdbcType=INTEGER},
+      </if>
+      <if test="areaName != null">
+        area_name = #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null">
+        `level` = #{level,jdbcType=INTEGER},
+      </if>
+      <if test="cityCode != null">
+        city_code = #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="center != null">
+        center = #{center,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        parent_id = #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createrId != null">
+        creater_id = #{createrId,jdbcType=INTEGER},
+      </if>
+      <if test="modifierId != null">
+        modifier_id = #{modifierId,jdbcType=INTEGER},
+      </if>
+      <if test="gmtCreated != null">
+        gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleted != null">
+        deleted = #{deleted,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.songjy.sharding.sphere.model.area.SysArea">
+    update sys_area
+    set area_code = #{areaCode,jdbcType=INTEGER},
+      area_name = #{areaName,jdbcType=VARCHAR},
+      `level` = #{level,jdbcType=INTEGER},
+      city_code = #{cityCode,jdbcType=VARCHAR},
+      center = #{center,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      creater_id = #{createrId,jdbcType=INTEGER},
+      modifier_id = #{modifierId,jdbcType=INTEGER},
+      gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      deleted = #{deleted,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.songjy.sharding.sphere.mapper.order.OrderItemMapper">
+  <resultMap id="BaseResultMap" type="com.songjy.sharding.sphere.model.order.OrderItem">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <id column="pay_discount" jdbcType="INTEGER" property="payDiscount" />
+    <result column="order_id" jdbcType="INTEGER" property="orderId" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="brand_name" jdbcType="VARCHAR" property="brandName" />
+    <result column="product_name" jdbcType="VARCHAR" property="productName" />
+    <result column="order_date" jdbcType="VARCHAR" property="orderDate" />
+    <result column="pay_date" jdbcType="VARCHAR" property="payDate" />
+    <result column="total_price" jdbcType="REAL" property="totalPrice" />
+    <result column="pay_price" jdbcType="REAL" property="payPrice" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, pay_discount, order_id, user_id, brand_name, product_name, order_date, pay_date, 
+    total_price, pay_price
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="map" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_order_item
+    where id = #{id,jdbcType=BIGINT}
+      and pay_discount = #{payDiscount,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="map">
+    delete from t_order_item
+    where id = #{id,jdbcType=BIGINT}
+      and pay_discount = #{payDiscount,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.songjy.sharding.sphere.model.order.OrderItem">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_order_item (pay_discount, order_id, user_id, 
+      brand_name, product_name, order_date, 
+      pay_date, total_price, pay_price
+      )
+    values (#{payDiscount,jdbcType=INTEGER}, #{orderId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, 
+      #{brandName,jdbcType=VARCHAR}, #{productName,jdbcType=VARCHAR}, #{orderDate,jdbcType=VARCHAR}, 
+      #{payDate,jdbcType=VARCHAR}, #{totalPrice,jdbcType=REAL}, #{payPrice,jdbcType=REAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.songjy.sharding.sphere.model.order.OrderItem">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_order_item
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="payDiscount != null">
+        pay_discount,
+      </if>
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="brandName != null">
+        brand_name,
+      </if>
+      <if test="productName != null">
+        product_name,
+      </if>
+      <if test="orderDate != null">
+        order_date,
+      </if>
+      <if test="payDate != null">
+        pay_date,
+      </if>
+      <if test="totalPrice != null">
+        total_price,
+      </if>
+      <if test="payPrice != null">
+        pay_price,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="payDiscount != null">
+        #{payDiscount,jdbcType=INTEGER},
+      </if>
+      <if test="orderId != null">
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="brandName != null">
+        #{brandName,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null">
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="orderDate != null">
+        #{orderDate,jdbcType=VARCHAR},
+      </if>
+      <if test="payDate != null">
+        #{payDate,jdbcType=VARCHAR},
+      </if>
+      <if test="totalPrice != null">
+        #{totalPrice,jdbcType=REAL},
+      </if>
+      <if test="payPrice != null">
+        #{payPrice,jdbcType=REAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.songjy.sharding.sphere.model.order.OrderItem">
+    update t_order_item
+    <set>
+      <if test="orderId != null">
+        order_id = #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="brandName != null">
+        brand_name = #{brandName,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null">
+        product_name = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="orderDate != null">
+        order_date = #{orderDate,jdbcType=VARCHAR},
+      </if>
+      <if test="payDate != null">
+        pay_date = #{payDate,jdbcType=VARCHAR},
+      </if>
+      <if test="totalPrice != null">
+        total_price = #{totalPrice,jdbcType=REAL},
+      </if>
+      <if test="payPrice != null">
+        pay_price = #{payPrice,jdbcType=REAL},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+      and pay_discount = #{payDiscount,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.songjy.sharding.sphere.model.order.OrderItem">
+    update t_order_item
+    set order_id = #{orderId,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=INTEGER},
+      brand_name = #{brandName,jdbcType=VARCHAR},
+      product_name = #{productName,jdbcType=VARCHAR},
+      order_date = #{orderDate,jdbcType=VARCHAR},
+      pay_date = #{payDate,jdbcType=VARCHAR},
+      total_price = #{totalPrice,jdbcType=REAL},
+      pay_price = #{payPrice,jdbcType=REAL}
+    where id = #{id,jdbcType=BIGINT}
+      and pay_discount = #{payDiscount,jdbcType=INTEGER}
+  </update>
+</mapper>
