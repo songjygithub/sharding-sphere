@@ -86,7 +86,7 @@ public class QuartzConfiguration implements SchedulerFactoryBeanCustomizer {
     //@Bean
     public CronTriggerFactoryBean cleanAccessLogJobTrigger(@Qualifier(CLEAN_ACCESS_LOG_JOB_ID) JobDetail jobDetail) {
         CronTriggerFactoryBean trigger = new CronTriggerFactoryBean();
-        trigger.setCronExpression("0/2 0 0 * * ?");
+        trigger.setCronExpression("0 0 0 * * ?");
         trigger.setJobDetail(jobDetail);
         return trigger;
     }
