@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.songjy.quartz.distributed.mapper.quartz.JobLogMapper">
+  <resultMap id="BaseResultMap" type="com.songjy.quartz.distributed.model.quartz.JobLog">
+    <id column="job_log_id" jdbcType="INTEGER" property="jobLogId" />
+    <result column="job_name" jdbcType="VARCHAR" property="jobName" />
+    <result column="job_group" jdbcType="VARCHAR" property="jobGroup" />
+    <result column="method_name" jdbcType="VARCHAR" property="methodName" />
+    <result column="method_params" jdbcType="VARCHAR" property="methodParams" />
+    <result column="job_message" jdbcType="VARCHAR" property="jobMessage" />
+    <result column="status" jdbcType="CHAR" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.songjy.quartz.distributed.model.quartz.JobLog">
+    <result column="exception_info" jdbcType="LONGVARCHAR" property="exceptionInfo" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    job_log_id, job_name, job_group, method_name, method_params, job_message, `status`, 
+    create_time
+  </sql>
+  <sql id="Blob_Column_List">
+    exception_info
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sys_job_log
+    where job_log_id = #{jobLogId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sys_job_log
+    where job_log_id = #{jobLogId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.songjy.quartz.distributed.model.quartz.JobLog">
+    insert into sys_job_log (job_log_id, job_name, job_group, 
+      method_name, method_params, job_message, 
+      `status`, create_time, exception_info
+      )
+    values (#{jobLogId,jdbcType=INTEGER}, #{jobName,jdbcType=VARCHAR}, #{jobGroup,jdbcType=VARCHAR}, 
+      #{methodName,jdbcType=VARCHAR}, #{methodParams,jdbcType=VARCHAR}, #{jobMessage,jdbcType=VARCHAR}, 
+      #{status,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, #{exceptionInfo,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.songjy.quartz.distributed.model.quartz.JobLog">
+    insert into sys_job_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="jobLogId != null">
+        job_log_id,
+      </if>
+      <if test="jobName != null">
+        job_name,
+      </if>
+      <if test="jobGroup != null">
+        job_group,
+      </if>
+      <if test="methodName != null">
+        method_name,
+      </if>
+      <if test="methodParams != null">
+        method_params,
+      </if>
+      <if test="jobMessage != null">
+        job_message,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="exceptionInfo != null">
+        exception_info,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="jobLogId != null">
+        #{jobLogId,jdbcType=INTEGER},
+      </if>
+      <if test="jobName != null">
+        #{jobName,jdbcType=VARCHAR},
+      </if>
+      <if test="jobGroup != null">
+        #{jobGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="methodName != null">
+        #{methodName,jdbcType=VARCHAR},
+      </if>
+      <if test="methodParams != null">
+        #{methodParams,jdbcType=VARCHAR},
+      </if>
+      <if test="jobMessage != null">
+        #{jobMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="exceptionInfo != null">
+        #{exceptionInfo,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.songjy.quartz.distributed.model.quartz.JobLog">
+    update sys_job_log
+    <set>
+      <if test="jobName != null">
+        job_name = #{jobName,jdbcType=VARCHAR},
+      </if>
+      <if test="jobGroup != null">
+        job_group = #{jobGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="methodName != null">
+        method_name = #{methodName,jdbcType=VARCHAR},
+      </if>
+      <if test="methodParams != null">
+        method_params = #{methodParams,jdbcType=VARCHAR},
+      </if>
+      <if test="jobMessage != null">
+        job_message = #{jobMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="exceptionInfo != null">
+        exception_info = #{exceptionInfo,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where job_log_id = #{jobLogId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.songjy.quartz.distributed.model.quartz.JobLog">
+    update sys_job_log
+    set job_name = #{jobName,jdbcType=VARCHAR},
+      job_group = #{jobGroup,jdbcType=VARCHAR},
+      method_name = #{methodName,jdbcType=VARCHAR},
+      method_params = #{methodParams,jdbcType=VARCHAR},
+      job_message = #{jobMessage,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=CHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      exception_info = #{exceptionInfo,jdbcType=LONGVARCHAR}
+    where job_log_id = #{jobLogId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.songjy.quartz.distributed.model.quartz.JobLog">
+    update sys_job_log
+    set job_name = #{jobName,jdbcType=VARCHAR},
+      job_group = #{jobGroup,jdbcType=VARCHAR},
+      method_name = #{methodName,jdbcType=VARCHAR},
+      method_params = #{methodParams,jdbcType=VARCHAR},
+      job_message = #{jobMessage,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=CHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where job_log_id = #{jobLogId,jdbcType=INTEGER}
+  </update>
+</mapper>

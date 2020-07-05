@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.songjy.quartz.distributed.mapper.flyway.FlywaySchemaHistoryMapper">
+  <resultMap id="BaseResultMap" type="com.songjy.quartz.distributed.model.flyway.FlywaySchemaHistory">
+    <id column="installed_rank" jdbcType="INTEGER" property="installedRank" />
+    <result column="version" jdbcType="VARCHAR" property="version" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="script" jdbcType="VARCHAR" property="script" />
+    <result column="checksum" jdbcType="INTEGER" property="checksum" />
+    <result column="installed_by" jdbcType="VARCHAR" property="installedBy" />
+    <result column="installed_on" jdbcType="TIMESTAMP" property="installedOn" />
+    <result column="execution_time" jdbcType="INTEGER" property="executionTime" />
+    <result column="success" jdbcType="BIT" property="success" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    installed_rank, version, description, `type`, script, `checksum`, installed_by, installed_on, 
+    execution_time, success
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from flyway_schema_history
+    where installed_rank = #{installedRank,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from flyway_schema_history
+    where installed_rank = #{installedRank,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insertSelective" parameterType="com.songjy.quartz.distributed.model.flyway.FlywaySchemaHistory">
+    <selectKey keyProperty="installedRank" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into flyway_schema_history
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="version != null">
+        version,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="type != null">
+        `type`,
+      </if>
+      <if test="script != null">
+        script,
+      </if>
+      <if test="checksum != null">
+        `checksum`,
+      </if>
+      <if test="installedBy != null">
+        installed_by,
+      </if>
+      <if test="installedOn != null">
+        installed_on,
+      </if>
+      <if test="executionTime != null">
+        execution_time,
+      </if>
+      <if test="success != null">
+        success,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="version != null">
+        #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="script != null">
+        #{script,jdbcType=VARCHAR},
+      </if>
+      <if test="checksum != null">
+        #{checksum,jdbcType=INTEGER},
+      </if>
+      <if test="installedBy != null">
+        #{installedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="installedOn != null">
+        #{installedOn,jdbcType=TIMESTAMP},
+      </if>
+      <if test="executionTime != null">
+        #{executionTime,jdbcType=INTEGER},
+      </if>
+      <if test="success != null">
+        #{success,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.songjy.quartz.distributed.model.flyway.FlywaySchemaHistory">
+    update flyway_schema_history
+    <set>
+      <if test="version != null">
+        version = #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        `type` = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="script != null">
+        script = #{script,jdbcType=VARCHAR},
+      </if>
+      <if test="checksum != null">
+        `checksum` = #{checksum,jdbcType=INTEGER},
+      </if>
+      <if test="installedBy != null">
+        installed_by = #{installedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="installedOn != null">
+        installed_on = #{installedOn,jdbcType=TIMESTAMP},
+      </if>
+      <if test="executionTime != null">
+        execution_time = #{executionTime,jdbcType=INTEGER},
+      </if>
+      <if test="success != null">
+        success = #{success,jdbcType=BIT},
+      </if>
+    </set>
+    where installed_rank = #{installedRank,jdbcType=INTEGER}
+  </update>
+
+  <select id="latestRecord" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from flyway_schema_history
+    where installed_rank = (SELECT MAX(`installed_rank`) FROM `flyway_schema_history`)
+  </select>
+</mapper>
