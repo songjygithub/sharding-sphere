@@ -23,6 +23,23 @@ public class QuartzManagerTest extends QuartzDistributedApplicationTests {
     }
 
     @Test
+    public void updateQuartzJobTest() throws InterruptedException {
+        job.setCronExpression("0 0/7 * * * ?");
+        quartzManager.updateQuartzJob(job);
+        TimeUnit.SECONDS.sleep(5L);
+    }
+
+    @Test
+    public void pauseJobTest(){
+        quartzManager.pauseJob(job);
+    }
+
+    @Test
+    public void resumeJobTest(){
+        quartzManager.resumeJob(job);
+    }
+
+    @Test
     public void deleteJobTest(){
         quartzManager.deleteJob(job);
     }

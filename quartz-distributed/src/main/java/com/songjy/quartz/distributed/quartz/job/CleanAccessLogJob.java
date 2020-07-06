@@ -3,10 +3,7 @@ package com.songjy.quartz.distributed.quartz.job;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
-import org.quartz.Job;
-import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
-import org.quartz.SchedulerException;
+import org.quartz.*;
 import org.springframework.context.ApplicationContext;
 
 import java.io.File;
@@ -20,7 +17,7 @@ import static com.songjy.quartz.distributed.Constant.APPLICATION_CONTEXT_SCHEDUL
  * @date 2020-07-05
  */
 @Slf4j
-public class CleanAccessLogJob implements Job {
+public class CleanAccessLogJob implements InterruptableJob {
 
     /**
      * access文件日志名称匹配正则
@@ -30,7 +27,7 @@ public class CleanAccessLogJob implements Job {
     private ApplicationContext applicationContext;
 
     @Override
-    public void execute(JobExecutionContext context) throws JobExecutionException {
+    public void execute(JobExecutionContext context) {
         try {
             applicationContext = (ApplicationContext) context.getScheduler().getContext().get(APPLICATION_CONTEXT_SCHEDULER_CONTEXT_KEY);
         } catch (SchedulerException e) {
@@ -73,5 +70,10 @@ public class CleanAccessLogJob implements Job {
                 log.warn("文件【{}】删除{}", file.getAbsolutePath(), delete ? "成功" : "失败");
             }
         }
+    }
+
+    @Override
+    public void interrupt() {
+        log.warn("任务{}强行中断", this.getClass().getName());
     }
 }

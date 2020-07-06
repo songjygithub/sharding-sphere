@@ -8,6 +8,8 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 /**
  * @author songjy
  */
@@ -86,11 +88,22 @@ public class QuartzManager implements InitializingBean {
                 return;
             }
 
+            long startAt = System.currentTimeMillis();
             CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(job.getCronExpression());
             TriggerBuilder<CronTrigger> triggerBuilder = cronTrigger.getTriggerBuilder();
-            cronTrigger = triggerBuilder.withIdentity(triggerKey).withSchedule(scheduleBuilder).build();
+            cronTrigger = triggerBuilder.withIdentity(triggerKey)
+                    .withSchedule(scheduleBuilder)
+                    /*重新计时时间*/
+                    //.startNow()
+                    //.startAt(new Date(startAt))
+                    .build();
             scheduler.rescheduleJob(triggerKey, cronTrigger);
 
+            JobKey jobKey = JobKey.jobKey(job.getJobName(),job.getJobGroup());
+            /*任务若已经在执行中，则强制中断*/
+            //scheduler.interrupt(jobKey);
+            /*修改的后立马执行一次*/
+            //scheduler.triggerJob(jobKey);
         } catch (Exception e) {
             log.error("修改任务调度中的定时任务异常！" + e.getMessage(), e);
         }
