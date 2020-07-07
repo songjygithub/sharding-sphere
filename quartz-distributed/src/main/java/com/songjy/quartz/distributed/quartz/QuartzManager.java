@@ -162,6 +162,7 @@ public class QuartzManager implements InitializingBean {
             log.info("停止任务定时器");
             scheduler.pauseTrigger(triggerKey);
             scheduler.unscheduleJob(triggerKey);
+            scheduler.deleteJob(JobKey.jobKey(job.getJobName(),job.getJobGroup()));
         } catch (Exception e) {
             log.info("删除任务调度定时器异常！" + e.getMessage(), e);
         }
