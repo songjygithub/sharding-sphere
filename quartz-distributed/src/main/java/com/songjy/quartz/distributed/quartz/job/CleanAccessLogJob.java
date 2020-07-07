@@ -13,10 +13,13 @@ import java.util.regex.Pattern;
 import static com.songjy.quartz.distributed.Constant.APPLICATION_CONTEXT_SCHEDULER_CONTEXT_KEY;
 
 /**
+ * 不允许并发执行
+ *
  * @author songjy
  * @date 2020-07-05
  */
 @Slf4j
+@DisallowConcurrentExecution
 public class CleanAccessLogJob implements InterruptableJob {
 
     /**
