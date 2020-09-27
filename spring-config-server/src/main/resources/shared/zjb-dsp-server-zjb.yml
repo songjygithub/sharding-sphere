@@ -1,0 +1,13 @@
+#纸巾宝核心系统数据库
+db.zjb.username: ENC(6Q+FhQqwxK3U5jL+SgyoLg==)
+db.zjb.password: ENC(MNxpTcvQAZJz/i9JqS62uCF8yKEX1tYN)
+db.zjb.url: jdbc:mysql://rm-uf65a55vmr075k054.mysql.rds.aliyuncs.com:3306/zjb?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true
+db.zjb.driverClass: com.mysql.jdbc.Driver
+
+spring:
+  data:
+    mongodb:
+      uri: mongodb://zjbmg:Zjb$mg123@dds-uf6285353b99fa241.mongodb.rds.aliyuncs.com:3717,dds-uf6285353b99fa242.mongodb.rds.aliyuncs.com:3717/zjb?replicaSet=mgset-15844997
+  cache:
+    ehcache:
+      config: classpath:ehcache/ehcache-shiro.xml

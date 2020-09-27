@@ -1,0 +1,13 @@
+#纸巾宝核心系统数据库
+db.zjb.username: root
+db.zjb.password: 123456
+db.zjb.url: jdbc:mysql://127.0.0.1:3306/zjb?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true
+db.zjb.driverClass: com.mysql.jdbc.Driver
+
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost/dmp
+  cache:
+    ehcache:
+      config: classpath:ehcache/ehcache-shiro.xml
