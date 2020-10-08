@@ -20,8 +20,8 @@ public class OrderControllerTest extends DemoShardingSphereApplicationTests {
     public void addTest() throws Exception {
 
         Order order = new Order();
-        order.setUserId(2);
-        order.setOrderId(1);
+        order.setUserId(1L);
+        order.setOrderId(System.currentTimeMillis());
 
         mockMvc.perform(post("/order/add")
                 .contentType(MediaType.APPLICATION_JSON)
